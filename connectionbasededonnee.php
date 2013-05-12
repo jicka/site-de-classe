@@ -1,4 +1,4 @@
 <?php	
-mysql_connect("localhost", "NOM_UTILISATEUR", "MOT_DE_PASSE");
-mysql_select_db("NOM_DE_LA_BDD");
+mysql_connect("localhost", "root", "");
+mysql_select_db("jicka_db1");
 ?>

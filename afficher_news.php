@@ -30,8 +30,24 @@ $donnees['contenu'] = stripslashes($donnees['contenu']);
 <p>Auteur: <?php echo $donnees['auteur']; ?></p>
 <p> <?php echo $donnees['contenu']; ?></p>
 <?php
-
-
+$pj_brut = mysql_query("SELECT * FROM pieces_jointes WHERE id_news='$news'")or die(mysql_error());
+if ($pj_brut != null)
+{
+	?>
+    <hr style="margin:15px;" />
+    <p><em>Pièces jointes:</em>
+    <ul>
+    <?php
+	while ($pj = mysql_fetch_array($pj_brut))
+	{
+		?>
+        <li><a href="fineUploader/uploads/uploads/<?php echo $pj['nom']; ?>"><?php echo $pj['nom']; ?></a></li>
+        <?php
+	}
+	?>
+    </ul></p>
+    <?php
+}
 
 
 ?>

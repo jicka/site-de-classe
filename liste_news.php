@@ -30,6 +30,17 @@ if (isset($_POST['titre']) AND isset($_POST['contenu']))
         // Ce n'est pas une modification, on cree une nouvelle entree dans la table
 		$time = time();
           mysql_query("INSERT INTO news(id,titre,contenu,timestamp,auteur,valide) VALUES('', '$titre', '$contenu', '$time', '{$_SESSION['pseudo']}', '1')")or die(mysql_error());
+		// Ajout des pièces jointes
+		 $id_last_news = mysql_query("SELECT * FROM news WHERE auteur='{$_SESSION['pseudo']}' AND titre='$titre'") or die(mysql_error());
+		 $id_last_news = mysql_fetch_array($id_last_news);
+		 $pieces_jointes_brut = mysql_query("SELECT * FROM pieces_jointes WHERE id_news='0'") or die(mysql_error());
+		 while ($pieces_jointes = mysql_fetch_array($pieces_jointes_brut))
+		 {
+			 mysql_query("UPDATE pieces_jointes SET id_news='{$id_last_news['id']}' WHERE id='{$pieces_jointes['id']}' ")or die(mysql_error());
+		 }
+		 
+		 
+		 
 		$retour = mysql_query("SELECT id FROM news WHERE titre='$titre' ")or die(mysql_error());
 $donnees = mysql_fetch_array($retour); // On fait une boucle pour lister les news
 ?>

@@ -5,6 +5,7 @@ session_start();
 <html>
    <head>
 <meta charset="utf-8" />
+ <link href="fineUploader/fineuploader-3.5.0.css" rel="stylesheet">
  </head>
     
     <body>
@@ -51,7 +52,12 @@ $infos_classe = mysql_fetch_array($infos_classe);
     <input type="hidden" name="id_news" id="rediger_news_form_id_news" value="<?php echo $id_news; ?>" />
 		<input type="hidden" id="rediger_news_form_valide" name="valide" value="oui" />
         <input type="checkbox" id="rediger_news_form_mail" <?php if($infos_classe['mail_actif'] == "1"){ ?>checked="checked"<?php } else { ?> disabled<?php } ?> /><label for="rediger_news_form_mail">Envoyer un mail?</label><br />
-     	<input class="rediger_news_form_submit" type="button" value="Enregistrer"/>
+        
+        
+           <div id="uploader"></div>
+          
+          
+     	<input class="rediger_news_form_submit" id="bouton_publier_news" type="button" value="Enregistrer"/>
           <?php
 }
 else
@@ -67,10 +73,76 @@ else
 <script src="jquery.js" type="text/javascript"></script>
 <script type="text/javascript" src="ckeditor/ckeditor.js"></script>
 
+ <script src="fineUploader/jquery.fineuploader-3.5.0.js"></script>
+<script>
+var numUploads = 0;
+$(document).ready(function() {
+	
+    var errorHandler = function(event, id, fileName, reason, xhr) {
+        qq.log("id: " + id + ", fileName: " + fileName + ", reason: " + reason);
+    };
+
+    var fileNum = 0;
+
+    $('#uploader').fineUploader({
+        debug: false,
+        request: {
+            endpoint: "fineUploader/uploads/index.php",
+            paramsInBody: true
+        },
+		text: {
+			uploadButton: 'Joindre un fichier'
+		},
+        chunking: {
+            enabled: true
+        },
+        resume: {
+            enabled: true
+        },
+        retry: {
+            enableAuto: false,
+            showButton: true
+        },
+        deleteFile: {
+            enabled: false,
+            endpoint: 'fineUploader/uploads/index.php',
+            forceConfirm: false,
+            params: {foo: "bar"}
+        },
+        display: {
+            fileSizeOnSubmit: true
+        },
+        paste: {
+            targetElement: $(document)
+        }
+    })
+        
+  		.on('error', errorHandler)
+        .on('uploadChunk resume', function(event, id, fileName, chunkData) {
+            qq.log('on' + event.type + ' -  ID: ' + id + ", FILENAME: " + fileName + ", PARTINDEX: " + chunkData.partIndex + ", STARTBYTE: " + chunkData.startByte + ", ENDBYTE: " + chunkData.endByte + ", PARTCOUNT: " + chunkData.totalParts);
+        })
+        .on("upload", function(event, id, filename) { 
+            $(this).fineUploader('setParams', {"hey": "ho"}, id);
+			 
+        });
+		
+});
+$('#uploader').on('complete', function(event, id, name, responseJSON){
+    numUploads++;
+	$('#bouton_publier_news').removeAttr("disabled");
+	if (numUploads > 4)
+	{
+		$('.qq-upload-button').hide();
+	}
+  });
+  $('#uploader').on('onSubmit', function(event, id, name, responseJSON){
+	$('#bouton_publier_news').attr("disabled", "disabled");
+  });
+
+</script>
 <script type="text/javascript">
 	CKEDITOR.replace( 'rediger_news_form_contenu' );
 
 </script>
-
 </body>
 </html>
