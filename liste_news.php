@@ -31,7 +31,7 @@ if (isset($_POST['titre']) AND isset($_POST['contenu']))
 		$time = time();
           mysql_query("INSERT INTO news(id,titre,contenu,timestamp,auteur,valide) VALUES('', '$titre', '$contenu', '$time', '{$_SESSION['pseudo']}', '1')")or die(mysql_error());
 		// Ajout des pièces jointes
-		 $id_last_news = mysql_query("SELECT * FROM news WHERE auteur='{$_SESSION['pseudo']}' AND titre='$titre'") or die(mysql_error());
+		 $id_last_news = mysql_query("SELECT * FROM news WHERE auteur='{$_SESSION['pseudo']}' AND titre='$titre' ORDER BY id DESC LIMIT 0, 1") or die(mysql_error());
 		 $id_last_news = mysql_fetch_array($id_last_news);
 		 $pieces_jointes_brut = mysql_query("SELECT * FROM pieces_jointes WHERE id_news='0'") or die(mysql_error());
 		 while ($pieces_jointes = mysql_fetch_array($pieces_jointes_brut))

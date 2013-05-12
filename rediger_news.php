@@ -85,7 +85,7 @@ $(document).ready(function() {
     var fileNum = 0;
 
     $('#uploader').fineUploader({
-        debug: false,
+        debug: true,
         request: {
             endpoint: "fineUploader/uploads/index.php",
             paramsInBody: true

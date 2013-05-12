@@ -26,6 +26,26 @@ if(isset($_SESSION['agorapseudo']) && $_SESSION['admin'] > 3)
 			echo "Erreur!";
 
 	}
+
+	if(isset($_GET['delete_pj']))
+	{
+		if (isset($_POST['id']))
+		{
+			$id = htmlspecialchars(mysql_real_escape_string($_POST['id']));
+			$retour = mysql_query("SELECT * FROM pieces_jointes WHERE id='$id'")or die(mysql_error());
+			$retour = mysql_fetch_array($retour);
+			$chemin = "fineUploader/uploads/uploads/" . $retour['nom'];
+			unlink($chemin);
+			mysql_query("DELETE FROM pieces_jointes WHERE id='$id'")or die(mysql_error());
+			?>
+			<p style="color:green;">Pièce jointe supprimée avec succès.</p>
+			<?php
+		}
+		else
+			echo "Erreur!";
+
+	}
+	
 	elseif(isset($_GET['reset_rq']))
 	{
 			mysql_query("DELETE FROM remarques")or die(mysql_error());

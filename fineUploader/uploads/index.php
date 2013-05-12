@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once 'qqFileUploader.php';
 
 $uploader = new qqFileUploader();
@@ -27,5 +28,5 @@ $result['uploadName'] = $uploader->getUploadName();
 header("Content-Type: text/plain");
 echo json_encode($result);
 include("../../connectionbasededonnee.php");
-mysql_query("INSERT INTO pieces_jointes(id,id_news,nom) VALUES('', '0', '{$result['uploadName']}')")or die(mysql_error());
+mysql_query("INSERT INTO pieces_jointes(id,id_news,nom, pseudo) VALUES('', '0', '{$result['uploadName']}', '{$_SESSION['agorapseudo']}')")or die(mysql_error());
 ?>

@@ -158,6 +158,43 @@
 					
 					
 				}
+				elseif(isset($_GET['see_pj']))
+				{
+					?><p style="font-size:.7em;"><a href="index.php">Accueil</a> / <a href="#" class="lien_accueil_admin">Gestion du site</a> / Voir les pièces jointes</p><?php
+					$retour = mysql_query("SELECT * FROM pieces_jointes")or die(mysql_error());
+					?>
+                    <table style="width:700px;"><thead>
+                    <tr>
+                    <th>Nom du fichier</th>
+                    <th>Utilisateur</th>
+                    <th>Suppression</th>
+                    </tr></thead>
+                    <tbody>
+                    <?php
+					while ($donnees = mysql_fetch_array($retour))
+					{
+						?>
+						<tr id="ligne_pj_<?php echo $donnees['id']; ?>">
+                            <td>
+								<?php echo $donnees['nom']; ?>
+                            </td>
+                            <td>
+								<?php echo $donnees['pseudo']; ?>
+                            </td>
+                            <td>
+                                <input type="button" value="Supprimer" onclick="delete_pj(<?php echo $donnees['id']; ?>);"/>
+                            </td>
+                        </tr>
+                    <?php
+					}
+                    ?>
+                    </tbody></table>
+                    <?php
+					
+					
+					
+					
+				}
 				elseif(isset($_GET['admin_see_all_db']))
 				{
 					
@@ -230,6 +267,7 @@
                     	<ul>
                         <li><a href="#" id="admin_edit_site">Modifier les paramètres généraux du site</a></li>
                         <li><a href="#" id="admin_see_all_db">Voir les informations de la classe (Mails, abonnements,...)</a></li>
+                        <li><a href="#" id="admin_see_pj">Voir les pièces jointes ajoutées dans les news</a></li>
                         </ul></li>
 					<li>Conseils de classe et orientation:
                         <ul>
@@ -335,6 +373,18 @@
 					});
 				}
 				});};
+
+
+			function delete_pj (id) {
+				$('#wait_during_process').fadeIn(500);
+				$('#ligne_pj_' + id).hide(500);			
+				$('#submission_confirmation').hide(0, function() {
+				$('#submission_confirmation').load('admin_traitement.php?delete_pj=1',{id: id}, function() {
+				$('#wait_during_process').fadeOut(500);
+				$('#submission_confirmation').show(1750);
+				});
+			});};
+			
 				<?php
 				if(isset($_GET['page_conseils']))
 				{

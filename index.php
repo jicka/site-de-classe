@@ -127,8 +127,8 @@
     				<?php
     				$contenu = stripslashes($donnees['contenu']);
     				echo $contenu;
-					$pj_brut = mysql_query("SELECT * FROM pieces_jointes WHERE id_news='$news'")or die(mysql_error());
-					if ($pj_brut != null)
+					$pj_brut = mysql_query("SELECT * FROM pieces_jointes WHERE id_news='{$donnees['id']}'")or die(mysql_error());
+					if (mysql_num_rows($pj_brut) > 0)
 					{
 						?>
 						<hr style="margin:15px;" />

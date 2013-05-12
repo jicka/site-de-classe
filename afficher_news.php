@@ -31,7 +31,7 @@ $donnees['contenu'] = stripslashes($donnees['contenu']);
 <p> <?php echo $donnees['contenu']; ?></p>
 <?php
 $pj_brut = mysql_query("SELECT * FROM pieces_jointes WHERE id_news='$news'")or die(mysql_error());
-if ($pj_brut != null)
+if (mysql_num_rows($pj_brut) > 0)
 {
 	?>
     <hr style="margin:15px;" />

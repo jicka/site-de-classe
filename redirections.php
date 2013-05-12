@@ -17,7 +17,7 @@ if(isset($_SESSION['agorapseudo']))
 		
 		
 		
-		
+		//Utilisez ce code pour ajouter des liens en AJAX avec d'autres pages web de votre création.
 		
 //	$(function() {
 //		$('#updater').on('click', '.CLASS_DU_LIEN', function() {
@@ -231,6 +231,15 @@ if(isset($_SESSION['agorapseudo']))
 					$('#updater').load('admin.php?admin_see_all_db=1',function() {
 			  fin_chargement ()	;	  
 			  current_page = "admin.php?admin_see_all_db=1";  		
+		});});});
+
+		$(function() {
+			$('#updater').on('click', '#admin_see_pj', function() {
+			  debut_chargement ();		  
+				history.pushState({page: current_page}, "", "?redir=admin&get_name=see_pj&get_val=1");
+					$('#updater').load('admin.php?see_pj=1',function() {
+			  fin_chargement ()	;	  
+			  current_page = "admin.php?see_pj=1";  		
 		});});});
 
 		$(function() {
