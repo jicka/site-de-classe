@@ -59,6 +59,32 @@ if (isset($_POST["rediger_news_form_mail"]) && htmlspecialchars(mysql_real_escap
 <?php
 $temp_data = mysql_query("SELECT * FROM comptes WHERE news=1")or die (mysql_error());
 $i = 0;
+  $pageURL = 'http';
+  if ($_SERVER["HTTPS"] == "on") {$pageURL .= "s";}
+  $pageURL .= "://";
+  if ($_SERVER["SERVER_PORT"] != "80") {
+  $pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"];
+  } else {
+  $pageURL .= $_SERVER["SERVER_NAME"];
+  }
+
+	$pj_brut = mysql_query("SELECT * FROM pieces_jointes WHERE id_news='{$id_last_news['id']}'")or die(mysql_error());
+	if (mysql_num_rows($pj_brut) > 0)
+	{
+	  $texte_pj = "
+	  <hr style='margin:15px;' />
+	  <p><em>Pièces jointes:</em>
+	  <ul>";
+	  while ($pj = mysql_fetch_array($pj_brut))
+	  {
+		  
+		  $texte_pj .= "<li><a href='" . $pageURL ."/fineUploader/uploads/uploads/" . $pj['nom'] . "'>" .  $pj['nom'] . "</a></li>";
+		  
+	  }
+	  
+	  $texte_pj .= "</ul></p>";
+	  
+	}
 while ($data = mysql_fetch_array($temp_data))
 {
 	if ($i == 0)
@@ -86,7 +112,7 @@ $message_html = "<html>
         </style>
        <title>". htmlspecialchars($_POST['titre']) ."</title>
       </head>
-      <body><div class='corps1'>De ". $_SESSION['agorapseudo'] . ".<br />" . $_POST['contenu'] . "</div></body>
+      <body><section>De ". $_SESSION['agorapseudo'] . ".<br />" . $_POST['contenu'] . $texte_pj ."</section></body>
      </html>";
 
 //==========
@@ -104,28 +130,16 @@ $message_html = "<html>
 	}
     else
     {
-	    if((htmlspecialchars(mysql_real_escape_string($_POST['valide'])))=='oui')
-	    {
-			// On protege la variable "id_news" pour eviter une faille SQL
        		 $_POST['id_news'] = htmlspecialchars(mysql_real_escape_string(addslashes($_POST['id_news'])));
         	// C'est une modification, on met juste a jour le titre et le contenu
-        	mysql_query("UPDATE news SET valide='oui', titre='" . $titre . "', contenu='" . $contenu . "' WHERE id='" . $_POST['id_news'] . "'")or die(mysql_error());
-
-	    }
-	    else
-	    {
-        // On protege la variable "id_news" pour eviter une faille SQL
-        $_POST['id_news'] = addslashes(htmlspecialchars(mysql_real_escape_string($_POST['id_news'])));
-        // C'est une modification, on met juste a jour le titre et le contenu
-        mysql_query("UPDATE news SET titre='" . $titre . "', contenu='" . $contenu . "' WHERE id='" . $_POST['id_news'] . "'")or die(mysql_error());
-	    }
+        	mysql_query("UPDATE news SET titre='" . $titre . "', contenu='" . $contenu . "' WHERE id='" . $_POST['id_news'] . "'")or die(mysql_error());
     }
 }
  
 //
 // Verification 2 : est-ce qu'on veut supprimer une news ?
 //
-if (isset($_GET['supprimer_news'])) // Si on demande de supprimer une news
+if (isset($_GET['supprimer_news']) && $_SESSION['admin'] > 1) // Si on demande de supprimer une news
 {
     // Alors on supprime la news correspondante
     // On protege la variable "id_news" pour eviter une faille SQL
@@ -144,6 +158,9 @@ if ($_SESSION['admin'] > 1) { ?> <h2><a href="#" class="lien_rediger_news">Ajout
 <th>afficher</th>
 <th>Titre</th>
 <th>Date</th>
+	<?php if($_SESSION['admin']>1){ ?>
+    <th></th>
+    <?php } ?>
 </tr>
 </thead>
 <tbody>
@@ -155,11 +172,13 @@ while ($donnees = mysql_fetch_array($retour)) // On fait une boucle pour lister 
 {
 	$i++;
 ?>
-<tr>
+<tr id="ligne_news_<?php echo $donnees['id'] ?>">
 <td><a href="#" onclick="afficher_news (<?php echo $donnees['id']; ?>);">afficher</a></td>
 <td><?php echo stripslashes($donnees['titre']); ?></td>
 <td><?php echo date('d/m/Y', $donnees['timestamp']); ?></td>
-
+	<?php if($_SESSION['admin']>3 || $_SESSION['agorapseudo'] == $donnees['auteur']){ ?>
+    <td><a href="#" onclick="editer_news (<?php echo $donnees['id']; ?>);"><img src="ressources/edit.png" /></a>|<a href="#" onclick="suprimmer_news (<?php echo $donnees['id']; ?>);"><img src="ressources/delete.png" /></a></td>
+    <?php } ?>
 </tr>
 <?php
 } // Fin de la boucle qui liste toutes les news
@@ -175,6 +194,28 @@ function afficher_news (news_id) {
 			history.pushState({page: current_page}, "", "?redir=afficher_news&get_name=news&get_val=" + news_id);
 			$('#updater').load('afficher_news.php?news=' + news_id, function() {
 				current_page = "afficher_news.php?news=" + news_id;
+				fin_chargement ()		  
+
+
+			});
+    };
+
+function editer_news (news_id) {
+			debut_chargement ()
+			history.pushState({page: current_page}, "", "?redir=rediger_news&get_name=news&get_val=" + news_id);
+			$('#updater').load('rediger_news.php?edit=1&news=' + news_id, function() {
+				current_page = "rediger_news.php?edit=1&news=" + news_id;
+				fin_chargement ()		  
+
+
+			});
+    };
+	
+function suprimmer_news (news_id) {
+			debut_chargement ()
+			history.pushState({page: current_page}, "", "?redir=liste_news");
+			$('#updater').load('liste_news.php?supprimer_news=' + news_id, function() {
+				current_page = "liste_news.php";
 				fin_chargement ()		  
 
 

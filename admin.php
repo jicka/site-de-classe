@@ -288,9 +288,13 @@
 			else
 			{
 				?>
-    			<img src="ressources/connexion.png" class="conexion" alt="connexion"/>
+                <p style="color:red;">Vous n'êtes pas autorisés à voir cette page.</p>
+                <script type="text/javascript">
+				setTimeout(function() {
+					window.location.replace("index.php");
+				}, 5000);
+				</script>
     			<?php
-				include('connection.php');
 			}
 			?>
                             <div id="wait_during_process">

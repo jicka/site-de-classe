@@ -14,17 +14,6 @@ $infos_classe = mysql_fetch_array($infos_classe);
 </footer>
 <script type="text/javascript" src="ckeditor/ckeditor.js"></script>
 <script type="text/javascript">
-<?php
-if(!isset($_SESSION['agorapseudo']))
-{
-	?>
-  if ($('#noRedir').html() != "BlaBlabla")
-  {
-	  window.location.replace("index.php");
-  }
-<?php
-}
-?>
 			//  WEB FONT LOADER
   WebFontConfig = {
     google: { families: [ 'Arbutus+Slab::latin' ] }

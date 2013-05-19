@@ -16,12 +16,12 @@ session_start();
 if ($_SESSION['admin'] > 1)
 {
 include('connectionbasededonnee.php');
-if (isset($_GET['modifier_news'])) // Si on demande de modifier une news
+if (isset($_GET['news'])) // Si on demande de modifier une news
 {
     // On protège la variable "modifier_news" pour éviter une faille SQL
-    $_GET['modifier_news'] = mysql_real_escape_string(htmlspecialchars($_GET['modifier_news']));
+    $_GET['news'] = mysql_real_escape_string(htmlspecialchars($_GET['news']));
     // On récupère les infos de la news correspondante
-    $retour = mysql_query('SELECT * FROM news WHERE id=\'' . $_GET['modifier_news'] . '\'');
+    $retour = mysql_query('SELECT * FROM news WHERE id=\'' . $_GET['news'] . '\'');
     $donnees = mysql_fetch_array($retour);
     
     // On place le titre et le contenu dans des variables simples
@@ -39,7 +39,6 @@ else // C'est qu'on rédige une nouvelle news
 $infos_classe = mysql_query("SELECT * FROM param_site WHERE id='1'") or die(mysql_error());
 $infos_classe = mysql_fetch_array($infos_classe);
 ?>
-<p>Note: Vous ne pouvez pas ajouter d'images ou de documents directement en les envoyant sur le site. Vous devez passer par un site qui héberge vos fichier (Dropbox, Imageshack, …).</p>
 	<div class="texte_center">
 <form id="rediger_news_form" action="liste_news.php" method="post">
 <p>Titre : <input type="text" size="50" id="rediger_news_form_titre" name="titre" value="<?php echo $titre; ?>" /></p>
@@ -53,9 +52,14 @@ $infos_classe = mysql_fetch_array($infos_classe);
 		<input type="hidden" id="rediger_news_form_valide" name="valide" value="oui" />
         <input type="checkbox" id="rediger_news_form_mail" <?php if($infos_classe['mail_actif'] == "1"){ ?>checked="checked"<?php } else { ?> disabled<?php } ?> /><label for="rediger_news_form_mail">Envoyer un mail?</label><br />
         
-        
-           <div id="uploader"></div>
-          
+        <?php
+		if (!isset($_GET['news'])) // Si on demande de modifier une news
+		{
+			?>
+            <div id="uploader"></div>
+     		<?php
+		}
+		?>
           
      	<input class="rediger_news_form_submit" id="bouton_publier_news" type="button" value="Enregistrer"/>
           <?php
@@ -72,7 +76,10 @@ else
 </section>
 <script src="jquery.js" type="text/javascript"></script>
 <script type="text/javascript" src="ckeditor/ckeditor.js"></script>
-
+<?php
+		if (isset($_GET['news'])) // Si on demande de modifier une news
+		{
+			?>
  <script src="fineUploader/jquery.fineuploader-3.5.0.js"></script>
 <script>
 var numUploads = 0;
@@ -135,10 +142,12 @@ $('#uploader').on('complete', function(event, id, name, responseJSON){
 		$('.qq-upload-button').hide();
 	}
   });
-  $('#uploader').on('onSubmit', function(event, id, name, responseJSON){
+  $('#uploader').on('upload', function(event, id, name, responseJSON){
 	$('#bouton_publier_news').attr("disabled", "disabled");
   });
-
+<?php
+}
+?>
 </script>
 <script type="text/javascript">
 	CKEDITOR.replace( 'rediger_news_form_contenu' );

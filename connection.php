@@ -55,7 +55,8 @@ if(isset ($_GET['connect']))
 					  echo"Vous vous connectez au compte: ";
 					  echo $comptes_array['prenom'] . " " . $comptes_array['nom'] . " ...";
 					  $termine=1;
-					  echo "<br />O.K."
+					  echo "<br />OK";
+					  
 					  ?>
 						  <script language="javascript" type="text/javascript">
                           <!--
@@ -92,11 +93,22 @@ if(isset ($_GET['connect']))
 					echo"Vous vous connectez au compte: ";
 					echo $comptes_array['prenom'] . " " . $comptes_array['nom'] ;
 					$termine=1;
-					
+					$redir = '';
+					if (isset($_GET['redir']))
+					{
+						if (isset($_GET['get_name']))
+						{
+							$redir = "?redir=" . $_GET['redir'] . "&get_name=" . $_GET['get_name'] . "&get_val=" . $_GET['get_val'];
+						}
+						else
+						{
+							$redir = "?redir=" . $_GET['redir'];
+						}
+					}
 					?>
 						<script language="javascript" type="text/javascript">
                         <!--
-                        window.location.replace("index.php");
+                        window.location.replace("index.php<?php echo $redir; ?>");
                         -->
                         </script>
 					<?php
@@ -145,7 +157,22 @@ if (!isset($_SESSION['agorapseudo']) AND !isset($termine))
 		$cookie_prenom = "";
 	}
 		?><div class="noir">
-		<form action="connection.php?connect=1" method="post">
+        <?php
+		$redir = '';
+		if (isset($_GET['redir']))
+		{
+			
+			if (isset($_GET['get_name']))
+			{
+				$redir = "&redir=" . $_GET['redir'] . "&get_name=" . $_GET['get_name'] . "&get_val=" . $_GET['get_val'];
+			}
+			else
+			{
+				$redir = "&redir=" . $_GET['redir'];
+			}
+		}
+		?>
+		<form action="connection.php?connect=1<?php echo $redir; ?>" method="post">
 		<div style="text-align:center; margin:auto;">
         <?php
 		if (!isset($_COOKIE['nom_classe_ts1']))
@@ -163,7 +190,7 @@ if (!isset($_SESSION['agorapseudo']) AND !isset($termine))
 		<div id="prenom">Prenom : <input type="text" value="<?php echo $cookie_prenom; ?>" id="champ_prenom" name="prenom" /><br /></div>
         Nom : <input type="text" id="nom" name="nom"  required="required" value="<?php echo $cookie_nom; ?>" /><br />
 		Mot de passe :  <input type="password" name="pass"/><br />
-        <input type="checkbox" name="souvenir" checked="checked" /> Se souvenir de l'identifiant.<br />
+        <input type="checkbox" name="souvenir" id="souvenir" checked /><label for="souvenir"> Se souvenir de l'identifiant.</label><br />
 		<input type="submit" value="Envoyer" />
 		</div>
 		</form></div>

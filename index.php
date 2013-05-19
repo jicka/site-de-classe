@@ -154,7 +154,11 @@
 				?>
     			<img src="ressources/connexion.png" class="conexion" alt="connexion"/>
     			<?php
-				include('connection.php');
+				if (isset($_GET['redir']))
+				{
+					?><p style="color:orange;">Veuillez vous connecter avant d'accéder à la page souhaitée.</p><?php
+				}
+					include('connection.php');
 			}
 			?>
             
@@ -162,7 +166,15 @@
 	</div>
 	<?php include("footer.php"); ?>
 <script type="text/javascript" src="ckeditor/ckeditor.js"></script>
-	<?php include("redirections.php"); ?>
+<script type="text/javascript">
+  $('#AJAX_loading_animation').hide();
+  $('.griseur').hide();
+</script>
+
+	<?php if (isset($_SESSION['agorapseudo']))
+	{
+		include("redirections.php");
+	?>
 
 <script type="text/javascript">
   $('#AJAX_loading_animation').hide();
@@ -186,6 +198,10 @@ if(event.state != null)
 	}
   }
 };
+
 </script>
-</body>
+<?php
+	}
+	?>
+    </body>
 </html>
