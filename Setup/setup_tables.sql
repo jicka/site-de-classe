@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS `apprec` (
   `apprec` text NOT NULL,
   `moyenne` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=40 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=0 ;
 CREATE TABLE IF NOT EXISTS `comptes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `prenom` text NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `comptes` (
   `mail_ok` text NOT NULL,
   `mail_public` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=53 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=0 ;
 CREATE TABLE IF NOT EXISTS `news` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `titre` text NOT NULL,
@@ -34,7 +34,14 @@ CREATE TABLE IF NOT EXISTS `news` (
   `auteur` text NOT NULL,
   `valide` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=28 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=0 ;
+CREATE TABLE IF NOT EXISTS `pieces_jointes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_news` int(11) NOT NULL,
+  `nom` text NOT NULL,
+  `pseudo` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=0 ;
 CREATE TABLE IF NOT EXISTS `param_conseils` (
   `id` int(11) NOT NULL,
   `prochain_conseil` bigint(20) NOT NULL,
@@ -56,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `remarques` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `remarque` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=0 ;
 CREATE TABLE IF NOT EXISTS `sondage` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pseudo` text NOT NULL,
@@ -64,4 +71,4 @@ CREATE TABLE IF NOT EXISTS `sondage` (
   `orientation` text NOT NULL,
   `certitude` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=40 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=0 ;
