@@ -42,7 +42,7 @@
 			$moyenne = htmlspecialchars(mysql_real_escape_string($_POST['moyenne']));
 			$apprec = mysql_real_escape_string($_POST['apprec']);
 			$pseudo = htmlspecialchars(mysql_real_escape_string($_POST['envoyer']));
-            mysql_query("UPDATE apprec SET apprec='$apprec', felicitations='$felicitations', compliments='$compliments', encouragements='$encouragements', avert_conduite='$avert_conduite', avert_travail='$avert_travail', moyenne='$moyenne' WHERE pseudo='$envoyer'")or die(mysql_error());
+            mysql_query("UPDATE apprec SET apprec='$apprec', felicitations='$felicitations', compliments='$compliments', encouragements='$encouragements', avert_conduite='$avert_conduite', avert_travail='$avert_travail', moyenne='$moyenne' WHERE pseudo='$pseudo'")or die(mysql_error());
 			?>
             <p style="color:green;">Enregistrement effectué avec succès.</p>
             <?php

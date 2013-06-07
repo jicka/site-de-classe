@@ -65,6 +65,10 @@
 							{
 								echo "<div style='color:red'>Vous avez eu un avertissement concernant votre travail!</div>";
 							}
+							if ($apprec['moyenne'] != "")
+							{
+								echo "Moyenne indicative: " . $apprec['moyenne'];
+							}
 							?>
                             <br /><br />
                         <br /><br />

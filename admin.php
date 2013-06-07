@@ -394,6 +394,9 @@
 				{
 					?>
 					$('#prochain_conseil').datepicker( $.datepicker.regional[ "fr" ] );
+					$( "#prochain_conseil" ).datepicker( "option", "dateFormat", "dd/mm/yy" );
+					$( "#prochain_conseil" ).datepicker( "option", "firstDay", 1 );
+					$( "#prochain_conseil" ).datepicker( "option", "minDate", -7 );
 					if ($('#orientation_possible').is(':checked') == false)
 					{
 						$('#orientation_obligatoire').attr('disabled', true)

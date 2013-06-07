@@ -212,15 +212,16 @@ function editer_news (news_id) {
     };
 	
 function suprimmer_news (news_id) {
-			debut_chargement ()
-			history.pushState({page: current_page}, "", "?redir=liste_news");
-			$('#updater').load('liste_news.php?supprimer_news=' + news_id, function() {
-				current_page = "liste_news.php";
-				fin_chargement ()		  
-
-
-			});
-    };
+			if (confirm("Voulez-vous réellement supprimer cette news? Cette action est irréversible."))
+			{
+				debut_chargement ()
+				history.pushState({page: current_page}, "", "?redir=liste_news");
+				$('#updater').load('liste_news.php?supprimer_news=' + news_id, function() {
+					current_page = "liste_news.php";
+					fin_chargement ()		  
+				});
+			}
+			};
 </script>
 </body>
 </html>

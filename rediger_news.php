@@ -46,11 +46,11 @@ $infos_classe = mysql_fetch_array($infos_classe);
     Contenu :
 <br />
 
-    <textarea name="rediger_news_form_contenu" id="rediger_news_form_contenu" class="editor" cols="90" rows="10"><?php echo $contenu; ?></textarea>
+    <textarea name="rediger_news_form_contenu" id="rediger_news_form_contenu" class="editor" cols="90" rows="10" spellcheck="true"><?php echo $contenu; ?></textarea>
 
     <input type="hidden" name="id_news" id="rediger_news_form_id_news" value="<?php echo $id_news; ?>" />
 		<input type="hidden" id="rediger_news_form_valide" name="valide" value="oui" />
-        <input type="checkbox" id="rediger_news_form_mail" <?php if($infos_classe['mail_actif'] == "1"){ ?>checked="checked"<?php } else { ?> disabled<?php } ?> /><label for="rediger_news_form_mail">Envoyer un mail?</label><br />
+        <input type="checkbox" id="rediger_news_form_mail" <?php if($infos_classe['mail_actif'] == "1" && !isset($_GET['news'])){ ?>checked="checked"<?php } else { ?> disabled<?php } ?> /><label for="rediger_news_form_mail">Envoyer un mail?</label><br />
         
         <?php
 		if (!isset($_GET['news'])) // Si on demande de modifier une news
@@ -77,7 +77,7 @@ else
 <script src="jquery.js" type="text/javascript"></script>
 <script type="text/javascript" src="ckeditor/ckeditor.js"></script>
 <?php
-		if (isset($_GET['news'])) // Si on demande de modifier une news
+		if (!isset($_GET['news'])) // Si on demande de modifier une news
 		{
 			?>
  <script src="fineUploader/jquery.fineuploader-3.5.0.js"></script>

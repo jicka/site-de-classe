@@ -9,18 +9,18 @@ CKEDITOR.editorConfig = function( config ) {
 config.language = "fr.js";
 config.toolbar_Basic =
 [
-	{ name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
+	{ name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat'] },
 	{ name: 'paragraph',   items : [ 'NumberedList','BulletedList','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock', 'Outdent','Indent' ] },
 	{ name: 'links',       items : [ 'Link' ] },
 	{ name: 'insert',      items : [ 'Image','Table','HorizontalRule','Smiley','SpecialChar' ] },
 	{ name: 'styles',      items : [ 'Format','FontSize', 'TextColor', 'BGColor' ] },
-	{ name: 'editing',     groups: [ 'spellchecker' ] }
 	];
-config.toolbar = 'Basic';
+config.extraPlugins = 'scayt';
 config.toolbarCanCollapse = false;
 config.removePlugins = 'elementspath';
-// config.scayt_autoStartup = true;
-// config.scayt_sLang = 'fr_FR';
+config.scayt_autoStartup = true;
+config.scayt_sLang = 'fr_FR';
+config.toolbar = 'Basic';
 
 
 };
