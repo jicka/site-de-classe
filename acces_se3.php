@@ -23,7 +23,7 @@ if(isset($_SESSION['agorapseudo']))
 <ul>
 <li><a href="http://lyc-prevert-longjumeau.ac-versailles.fr/lcs/">http://lyc-prevert-longjumeau.ac-versailles.fr/lcs/</a>.</li>
 <li>Cliquez sur &quot;se connecter&quot; (bouton en haut à gauche), puis connectez vous en utilisant les mêmes identifiants qu'au lycée.</li>
-<li>Cliquez sur &quot;Accèss au serveur de fichiers &laquo;Se3&raquo;&quot;.</li>
+<li>Cliquez sur &quot;Accès au serveur de fichiers &laquo;Se3&raquo;&quot;.</li>
 </ul>
 Une fois sur la page suivante (voir tableau ci-dessous), vous avez accès à tous les fichiers présents sur votre session au lycée. Par exemple, pour accéder aux dossiers "travail" et "échange", vous devez séléctionner le dossier "Classes", puis" Classe_<?php echo $infos_classe['classe']; ?>". Pour accéder à votre bureau, c'est le dossier "Home" qui est à séléctionner.<br />
   <table cellpadding="0" cellspacing="0">

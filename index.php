@@ -176,8 +176,6 @@
 	?>
 
 <script type="text/javascript">
-  $('#AJAX_loading_animation').hide();
-  $('.griseur').hide();
 var current_page = "";
 window.onpopstate = function(event) {
 if(event.state != null)

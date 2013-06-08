@@ -33,7 +33,7 @@ else // C'est qu'on rédige une nouvelle news
 {
     // Les variables $titre et $contenu sont vides, puisque c'est une nouvelle news
     $titre = '';
-    $contenu = '';
+    $contenu = '<p></p>';
     $id_news = 0; // La variable vaut 0, donc on se souviendra que ce n'est pas une modification
 }
 $infos_classe = mysql_query("SELECT * FROM param_site WHERE id='1'") or die(mysql_error());
@@ -46,8 +46,14 @@ $infos_classe = mysql_fetch_array($infos_classe);
     Contenu :
 <br />
 
+    <!--
     <textarea name="rediger_news_form_contenu" id="rediger_news_form_contenu" class="editor" cols="90" rows="10" spellcheck="true"><?php echo $contenu; ?></textarea>
-
+    -->
+    <br>
+	<div id="rediger_news_form_contenu" contenteditable="true" class="inline_editor">
+    <?php echo $contenu; ?>
+    </div>
+    <br>
     <input type="hidden" name="id_news" id="rediger_news_form_id_news" value="<?php echo $id_news; ?>" />
 		<input type="hidden" id="rediger_news_form_valide" name="valide" value="oui" />
         <input type="checkbox" id="rediger_news_form_mail" <?php if($infos_classe['mail_actif'] == "1" && !isset($_GET['news'])){ ?>checked="checked"<?php } else { ?> disabled<?php } ?> /><label for="rediger_news_form_mail">Envoyer un mail?</label><br />
@@ -150,7 +156,7 @@ $('#uploader').on('complete', function(event, id, name, responseJSON){
 ?>
 </script>
 <script type="text/javascript">
-	CKEDITOR.replace( 'rediger_news_form_contenu' );
+	 CKEDITOR.inline( 'rediger_news_form_contenu' );
 
 </script>
 </body>

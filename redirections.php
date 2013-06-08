@@ -22,7 +22,7 @@ if(isset($_SESSION['agorapseudo']))
 //	$(function() {
 //		$('#updater').on('click', '.CLASS_DU_LIEN', function() {
 //			debut_chargement ();		  
-//			history.pushState({page: current_page}, "", "?redir=NOM_DE_LA_PAGE_SANS_EXTENSION");
+//			history.pushState({page: current_page}, "", "?redir=NOM_DE_LA_PAGE_SANS_EXTENSION_.PHP");
 //			$('#updater').load('NOM_DE_LA_PAGE', function() {
 //				fin_chargement ()	;	  
 //				current_page = "NOM_DE_LA_PAGE";  
@@ -101,6 +101,17 @@ if(isset($_SESSION['agorapseudo']))
 			  });
 	  });
 	});
+
+		  $(function() {
+	  $('#updater').on('click', '.lien_rediger_news_mobile', function() {
+			  debut_chargement ();		  
+			  history.pushState({page: current_page}, "", "?redir=rediger_news_mobile");
+				$('#updater').load('rediger_news_mobile.php', function() {
+			  fin_chargement ()	;	  
+			  current_page = "rediger_news_mobile.php";  
+			  });
+	  });
+	});
 	
 		  $(function() {
 	  $('#updater').on('click', '.lien_liste_news', function() {
@@ -133,6 +144,19 @@ if(isset($_SESSION['agorapseudo']))
 				  });
 	  });
 	});
+	
+		$(function() {
+	  $('#updater').on('click', '.rediger_news_mobile_form_submit', function() {
+			  debut_chargement ();		  
+			  history.pushState({page: current_page}, "", "?redir=liste_news");
+				  $('#updater').load('liste_news.php',{ titre: $('#rediger_news_form_titre').val(), contenu: $('#rediger_news_form_contenu').val(), id_news: $('#rediger_news_form_id_news').val(), valide: $('#rediger_news_form_valide').val(), rediger_news_form_mail: $('#rediger_news_form_mail').prop('checked')}, function() {
+			  fin_chargement ()	;	  
+			  current_page = "liste_news.php";
+  
+				  });
+	  });
+	});
+
 	$(function() {
 	  $('#updater').on('click', '.modifier_profil_form_submit', function() {
 			  debut_chargement ();		  

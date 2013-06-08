@@ -27,6 +27,14 @@ body
     margin:0 0 0 -250px;
     z-index:100; 	
 }
+.inline_editor
+{
+	border-style:solid;
+	border-width:1px;
+	background-color:#F7F7F2;
+	text-align:left;
+	padding:4px;
+}
 .griseur
 {
 	z-index:5;
